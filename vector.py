@@ -57,6 +57,9 @@ vectorstore = Milvus(
     index_params={"index_type": "FLAT", "metric_type": "L2"},
     consistency_level="Strong",
     drop_old=False,  # set to True if seeking to drop the collection with that name if it exists
+    text_field="page_content",
+    metadata_field="metadata",
+    auto_id=True,
 )
 
 # %%
@@ -72,7 +75,7 @@ base_path = Path(MCAP_FOLDER)
 
 # Recursively find all files
 all_files = list(base_path.rglob("*"))
-splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+splitter = RecursiveCharacterTextSplitter(chunk_size=400, chunk_overlap=100)
 
 for file_path in all_files:
     if file_path.is_file():
